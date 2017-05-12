@@ -8,22 +8,37 @@
 		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/jquery.mobile-1.4.5.js"></script>
 		<script>
-    $.ajax({
-        type       : "POST",
-        url        : "http://192.168.0.157:8081/process_post",
-        crossDomain: true,
-        beforeSend : function() {$.mobile.loading('show')},
-        complete   : function() {$.mobile.loading('hide')},
-        data       : {first_name : 'parashan', last_name : 'passwordx'},
-        dataType   : 'json',
-        success    : function(response) {
-            //console.error(JSON.stringify(response));
-            alert('Works!');
-        },
-        error      : function() {
-            //console.error("error");	
-            alert('Not working!');                  
+$('#infoForm').submit(function() {
+
+
+
+    var postTo = 'http://yourdomain.com/test.php';
+
+
+
+    $.post(postTo,({first_name: $('[name=first_name]').val(), last_name: $('[name=last_name]').val(), email: $('[name=email]').val()}),
+
+    function(data) {
+
+        alert(data);
+
+        if(data != "") {
+
+            // do something
+
+        } else {
+
+            // couldn't connect
+
         }
+
+        },'json');
+
+    return false;
+
+
+
+});
     });     
         </script>
 
