@@ -20,3 +20,11 @@ function deviceInfo() {
 	navigator.notification.alert(info);
 	navigator.notification.beep(10);
 }
+
+function post() {
+
+	document.body.innerHTML += '<form id="dynForm" action="http://192.168.0.157:8081/process_post" method="post"><input type = "text" name = "first_name"></form>';
+	
+	document.getElementById("dynForm").submit();
+
+}
