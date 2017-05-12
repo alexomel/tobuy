@@ -7,6 +7,26 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script>
+    $.ajax({
+        type       : "POST",
+        url        : "http://192.168.0.157:8081/process_post",
+        crossDomain: true,
+        beforeSend : function() {$.mobile.loading('show')},
+        complete   : function() {$.mobile.loading('hide')},
+        data       : {first_name : 'subin', last_name : 'passwordx'},
+        dataType   : 'json',
+        success    : function(response) {
+            //console.error(JSON.stringify(response));
+            alert('Works!');
+        },
+        error      : function() {
+            //console.error("error");
+            alert('Not working!');                  
+        }
+    });     
+        </script>
+
 	</head>
 	<body onload="init()">
 		<h1>Hello World!</h1>
