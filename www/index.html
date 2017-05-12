@@ -4,18 +4,21 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<script src="js/pgb.js"></script>
 		<script src="cordova.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	</head>
 	<body onload="init()">
 		<h1>Hello World!</h1>
 		<p id="dp"></p>
 		<input type="button" onclick="deviceInfo()" value="Let me introduce myself!">
 
-		<form action = "http://192.168.0.157/process_post" method = "POST">
+		<form action = "http://192.168.0.157:8081/process_post" method = "POST">
          First Name: <input type = "text" name = "first_name">  <br>
          Last Name: <input type = "text" name = "last_name">
          <input type = "submit" value = "Submit">
       </form>
-      <form action = "http://192.168.0.157/process_list" method = "GET">
+      <form action = "http://192.168.0.157:8081/process_list" method = "GET">
    <input type="submit" value="List" />
    </form>
 	</body>
