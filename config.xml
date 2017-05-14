@@ -23,5 +23,5 @@
 
 	
 	<allow-navigation href="*" />
-	
+	  <splash src="splash.png" />
 </widget>
