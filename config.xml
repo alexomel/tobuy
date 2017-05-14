@@ -24,4 +24,7 @@
 	<allow-navigation href="*" />
 	
 	
+	<splash src="img/splash.png" density="land-hdpi"/>
+
+</platform>
 </widget>
