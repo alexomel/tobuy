@@ -13,7 +13,7 @@
 		Nikita
 	</author>
 	<platform name="android">
-		<splash src="img/splash.png" density="land-hdpi"/>
+		
 		</platform>
 	
 	<plugin name="cordova-plugin-device" spec="~1.1.4" />
