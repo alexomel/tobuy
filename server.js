@@ -34,7 +34,6 @@ var connection = mysql.createConnection({
 	password: '',
 	database: 'tobuy'
 });
-
 connection.connect(function(err){
 	if(!err){
 		console.log("Connected");
@@ -42,7 +41,6 @@ connection.connect(function(err){
 		console.log("Connection error");
 	}
 });
-
 app.get('/query',  function(req, res){
 	connection.query("SELECT * FROM users", function(err, rows, fields){
 		//connection.end();
@@ -51,28 +49,11 @@ app.get('/query',  function(req, res){
 	});
 	
 })
-
 app.post('/insert', urlencodedParser, function(req, res){
 	var email = req.body.first_name;
 	var password = req.body.last_name;
 	connection.query("INSERT INTO users (email, password) VALUES ('email@email', '1234')");
 });
-/*
-
-											MONGO DB CONNECT
-
-*/
-/*
-const MongoClient = require('mongodb').MongoClient
-var db;
-MongoClient.connect('mongodb://administrator:password1@ds133231.mlab.com:33231/test-my-app-1', (err, database) => {
-   if (err) return console.log(err)
-  db = database
-  app.listen(3000, () => {
-    console.log('listening on 3000')
-  })
-});
-*/
 /*
 
 											REQUESTS FROM UI
@@ -90,15 +71,12 @@ response = {
     //res.redirect('/')
   });
 });
+
 var count;
-app.get('/count', function(req, res) {
-	
+
+app.get('/count', function(req, res) {	
 	db.collection('users').find().toArray(function(err, results) {
-		//count = results.length;
-		//res.write(JSON.stringify(count));
-		//console.log(JSON.stringify(count));
 		res.send(results);
-		//res.status(404).send("Not found");
 	});
 });
 
@@ -118,7 +96,14 @@ var config = {
   };
  firebase.initializeApp(config);
 
- var authed = true;
+var authed = true;
+var user = {
+
+	email : "",
+	password : "",
+	id : "",
+	authed : false
+}
 app.post('/login',urlencodedParser, function(req, res) {
 	
  var email = req.body.first_name;
@@ -131,6 +116,10 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 	if(firebaseUser){
 		//console.log(firebaseUser);
 		authed = true;
+		user.email = req.body.first_name;
+		user.password = req.body.last_name;
+		user.id = connection.query("SELECT id FROM users WHERE email=" + user.email, function(err, rows, fields){);
+		user.authed = true;
 		res.send(JSON.stringify("true"));
 	}else{
 		console.log("not logged in");
@@ -139,15 +128,17 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 	}
 });
 });
-
 app.get('/authed', function(req, res){
 		res.send(authed);
 });
 
 app.get('/getGroups', function(req, res){
-		connection.query("SELECT * FROM groups", function(err, rows, fields){
-		//connection.end();
-		//console.log(rows);
-	res.send(rows);
-	});
+		connection.query("SELECT * FROM groups WHERE id_user=1", function(err, rows, fields){
+			res.send(rows);
+		});
+});
+app.post('/createGroup', function(req, res){
+		connection.query("INSER INTO groups (group_name, id_user) VALUES ()", function(err, rows, fields){
+			res.send(rows);
+		});
 });
