@@ -13,48 +13,6 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-</head>
-
-<body>
-    <form method="post" id="infoForm">
-        <input type="text" name="first_name" id="first_name" value="" placeholder="First Name" />
-        <input type="text" name="last_name" id="last_name" value="" placeholder="Last Name" />
-        <button type="submit" id="btnLogin">Submit</button>
-    </form>
-    <script>
-    // Initialize Firebase 
-
-    var config = {
-        apiKey: "AIzaSyAY1t4H9D3PUeu4j6_odxV1xQ5MAhS_S9Q",
-        authDomain: "tobuy-68833.firebaseapp.com",
-        databaseURL: "https://tobuy-68833.firebaseio.com",
-        projectId: "tobuy-68833",
-        storageBucket: "tobuy-68833.appspot.com",
-        messagingSenderId: "1092640222732"
-    };
-    firebase.initializeApp(config);
-
-    const txtEmail = document.getElementById('first_name');
-    const txtPassword = document.getElementById('last_name');
-
-    btnLogin.addEventListener('click', e => {
-        const email = txtEmail.value;
-        const pass = txtPassword.value;
-        const auth = firebase.auth();
-        const promise = auth.signInWithEmailAndPassword(email, pass);
-        promise.catch(e => alert(e.message));
-    });
-    </script>
-    </div>
-</body>
-
-=======
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<script src="js/pgb.js"></script>
-		<link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
-		<script src="js/jquery-1.9.1.min.js"></script>
-		<script src="js/jquery.mobile-1.4.5.js"></script>
 		
 	</head>
 	<body>
@@ -87,5 +45,5 @@
 
 
 	</body>
->>>>>>> 63fd14668281d0d3f47f5eec010ae7b1c519d8cc
+
 </html>
