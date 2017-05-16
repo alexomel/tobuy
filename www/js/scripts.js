@@ -1,26 +1,47 @@
 //main page
-var authenticated = false;
+var authenticated;
 $('#btn-submit').click(function(){
-	$.post('http://192.168.0.157:8081/login', ({txt_email: $('[name=txt-email]').val(), txt_password: $('[name=txt-password]').val()}), 'json');
-	$('#login-form')[0].reset();
-
-	$.get("http://192.168.0.157:8081/login", function(data, status){
-        authenticated = data;		
+	
+	
+	//$.post('http://192.168.0.157:8081/login', ({txt_email: $('[name=txt-email]').val(), txt_password: $('[name=txt-password]').val()}), true, 'json');
+	$.ajax({
+        type: "POST",
+        url: 'http://192.168.0.157:8081/login',
+        data: ({txt_email: $('#txt-email').val(), txt_password: $('#txt-password').val()}),
+        dataType: "json",
+		async: false,
+        success: function(data) {
+            if (data == true){
+				alert(data);
+				window.location.href = "groups-body.html";
+				data = false;
+			}else{
+				alert("Permission denied");
+			}
+        }
     });
-	if (authenticated == true){
-			window.location.href = "groups-body.html"
-		}else{
-			window.location.href = "groups-body.html"
-	}
+	/*
+	$.post('http://192.168.0.157:8081/check', function(data, status){
+		//alert(data);
+		authenticated = data;
+		if (authenticated == true){
+			window.location.href = "groups-body.html";
+		}
+	});*/
+	//$('#login-form')[0].reset();
+	/*
+	$.get("http://192.168.0.157:8081/login", function(data, status){
+        authenticated = data;
+		if (authenticated == true){
+			window.location.href = "groups-body.html";
+		}
+    });
+	*/
 });
 
 //groups
 function groups(){
-	$.get("http://192.168.0.157:8081/login", function(data, status){
-        authenticated = data;
-    });
 	
-	if (authenticated == false){
 			$.post('http://192.168.0.157:8081/list', function(data, status){
 			
 				//alert(data.length);
@@ -34,6 +55,4 @@ function groups(){
 					document.getElementById("group-list").appendChild(node);
 				}
 			});
-			
-	}
 }
