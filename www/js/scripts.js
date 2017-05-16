@@ -1,71 +1,17 @@
-/*
-action="http://192.168.0.157:8081/insert"
+var authenticated = false;
 
+$('#btn-submit').click(function(){
+	$.post('http://192.168.0.157:8081/login', ({txt_email: $('[name=txt-email]').val(), txt_password: $('[name=txt-password]').val()}), 'json');
+	$('#login-form')[0].reset();
 
-$('#infoForm').submit(function() {
-
-    var postTo = 'http://192.168.0.157:8081/process_post';
-    $.post(postTo,({first_name: $('[name=first_name]').val(), last_name: $('[name=last_name]').val()}),'json');
-    return false;
-
-});
-/*
-function loadDoc() {
-var value = $.get("http://192.168.0.157:8081/count", function(data, status){
-        //alert("Data: " + JSON.stringify(data));
-		document.getElementById("demo").innerHTML = JSON.stringify(data);
+	$.get("http://192.168.0.157:8081/login", function(data, status){
+        authenticated = data;		
     });
-}
-*/
-/*
-$('#infoForm').submit(function() {
-
-    var postTo = 'http://192.168.0.157:8081/insert';
-    $.post(postTo,({first_name: $('[name=first_name]').val(), last_name: $('[name=last_name]').val()}),'json');
-    return false;
-
-});
-$('#infoForm').submit(function() {
-
-    var postTo = 'http://192.168.0.157:8081/login';
-    $.post(postTo,({first_name: $('[name=first_name]').val(), last_name: $('[name=last_name]').val()}),'json');
-    return false;
-
-});
-*/
-var authed;
-$('#get').click(function() {
-$.get("http://192.168.0.157:8081/authed", function(data, status){
-		if(data == true){	
-			authed = true;
+	if (authenticated == true){
+			$.get("groups-body.html", function(data){ 
+				$(document).load(data);
+			});
 		}else{
-			authed = false;
-		}
-    });
-});
-$('#getG').click(function() {
-	$.get("http://192.168.0.157:8081/authed", function(data, status){
-		if(data == true){	
-			authed = true;
-		}else{
-			authed = false;
-		}
-    });
-$.get("http://192.168.0.157:8081/getGroups", function(data, status){
-        //alert("Data: " + JSON.stringify(data));
-		//if(data != ""){
-		//var dat = JSON.stringify(data);
-		var dat = JSON.parse(data);
-			//alert(JSON.stringify(dat));
-			var ul = document.getElementById("list");
-			var li = document.createElement("li");
-			var li2 = document.createElement("li");
-			li.appendChild(document.createTextNode(JSON.stringify(dat[0])));
-			ul.appendChild(li);
-			li2.appendChild(document.createTextNode(JSON.stringify(dat[1])));
-			ul.appendChild(li2);
-		//}else{
-		//	document.getElementById('demo').innerHTML = "NO!";
-		//}
-    });
+			window.location.href = "groups-body.html"
+	}
 });
