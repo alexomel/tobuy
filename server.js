@@ -6,6 +6,22 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var firebase = require('firebase');
 var mysql = require('mysql');
 
+
+var authenticated = false;
+/*
+
+												FIREBASE INIT
+
+*/
+var config = {
+    apiKey: "AIzaSyAY1t4H9D3PUeu4j6_odxV1xQ5MAhS_S9Q",
+    authDomain: "tobuy-68833.firebaseapp.com",
+    databaseURL: "https://tobuy-68833.firebaseio.com",
+    projectId: "tobuy-68833",
+    storageBucket: "tobuy-68833.appspot.com",
+    messagingSenderId: "1092640222732"
+  };
+ firebase.initializeApp(config);
 /*
 
 												START SERVER
@@ -41,6 +57,11 @@ connection.connect(function(err){
 		console.log("Connection error");
 	}
 });
+
+
+
+
+
 app.get('/query',  function(req, res){
 	connection.query("SELECT * FROM users", function(err, rows, fields){
 		//connection.end();
@@ -48,11 +69,12 @@ app.get('/query',  function(req, res){
 	res.send(JSON.stringify(rows));
 	});
 	
-})
+});
 app.post('/insert', urlencodedParser, function(req, res){
-	var email = req.body.first_name;
-	var password = req.body.last_name;
-	connection.query("INSERT INTO users (email, password) VALUES ('email@email', '1234')");
+	var email = req.body.txt_email;
+	var password = req.body.txt_password;
+	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")");
+	res.send("true");
 });
 /*
 
@@ -71,74 +93,26 @@ response = {
     //res.redirect('/')
   });
 });
+ 
 
-var count;
 
-app.get('/count', function(req, res) {	
-	db.collection('users').find().toArray(function(err, results) {
-		res.send(results);
-	});
-});
-
-/*
-
-										AUTH API CONNECTION
-
-*/
-
-var config = {
-    apiKey: "AIzaSyAY1t4H9D3PUeu4j6_odxV1xQ5MAhS_S9Q",
-    authDomain: "tobuy-68833.firebaseapp.com",
-    databaseURL: "https://tobuy-68833.firebaseio.com",
-    projectId: "tobuy-68833",
-    storageBucket: "tobuy-68833.appspot.com",
-    messagingSenderId: "1092640222732"
-  };
- firebase.initializeApp(config);
-
-var authed = true;
-var user = {
-
-	email : "",
-	password : "",
-	id : "",
-	authed : false
-}
 app.post('/login',urlencodedParser, function(req, res) {
 	
- var email = req.body.first_name;
- var pass = req.body.last_name;
+	var email = req.body.txt_email;
+	var pass = req.body.txt_password;
 	const auth = firebase.auth();
 	const promise = auth.signInWithEmailAndPassword(email, pass);
 	promise.catch(e => res.send(e.message));
+		
 	
-firebase.auth().onAuthStateChanged(firebaseUser => {
-	if(firebaseUser){
-		//console.log(firebaseUser);
-		authed = true;
-		user.email = req.body.first_name;
-		user.password = req.body.last_name;
-		user.id = connection.query("SELECT id FROM users WHERE email=" + user.email, function(err, rows, fields){);
-		user.authed = true;
-		res.send(JSON.stringify("true"));
-	}else{
-		console.log("not logged in");
-		authed = false;
-		res.send(JSON.stringify("false"));
-	}
+	firebase.auth().onAuthStateChanged(firebaseUser => {
+		if(firebaseUser){
+			authenticated = true;
+		}else{
+			authenticated = false;
+		}
+	});
 });
-});
-app.get('/authed', function(req, res){
-		res.send(authed);
-});
-
-app.get('/getGroups', function(req, res){
-		connection.query("SELECT * FROM groups WHERE id_user=1", function(err, rows, fields){
-			res.send(rows);
-		});
-});
-app.post('/createGroup', function(req, res){
-		connection.query("INSER INTO groups (group_name, id_user) VALUES ()", function(err, rows, fields){
-			res.send(rows);
-		});
+app.get('/login', function(req, res){
+	res.send(authenticated);
 });
