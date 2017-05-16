@@ -8,6 +8,7 @@ var mysql = require('mysql');
 
 
 var authenticated = false;
+var email;
 /*
 
 												FIREBASE INIT
@@ -108,6 +109,7 @@ app.post('/login',urlencodedParser, function(req, res) {
 	firebase.auth().onAuthStateChanged(firebaseUser => {
 		if(firebaseUser){
 			authenticated = true;
+			email = req.body.txt_email;
 		}else{
 			authenticated = false;
 		}
@@ -115,4 +117,29 @@ app.post('/login',urlencodedParser, function(req, res) {
 });
 app.get('/login', function(req, res){
 	res.send(authenticated);
+});
+var groups = [];
+var id;
+app.post('/list', urlencodedParser, function(req, res) {
+	var email = 'nekitko123@gmail.com';
+	var values;
+	
+	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
+		values = JSON.parse(JSON.stringify(rows));
+		id = Number(values[0].id);
+		//console.log(JSON.parse(id));
+		var query = mysql.format('SELECT group_name FROM GROUPS WHERE id_user=?', id);
+		connection.query(query, function(err, rows, fields){
+		//console.log(rows);
+			values = JSON.parse(JSON.stringify(rows));
+			console.log("values: " + JSON.stringify(rows));
+			for(var i=0; i < values.length; i++){
+				groups.push(values[i].group_name);
+			}
+			//groups = values[0].group_name;
+			//console.log(groups);
+			res.send(groups);
+			groups = [];
+		});
+	});
 });
