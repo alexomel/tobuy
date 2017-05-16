@@ -7,8 +7,7 @@ var firebase = require('firebase');
 var mysql = require('mysql');
 
 
-var authenticated = false;
-var email;
+
 /*
 
 												FIREBASE INIT
@@ -95,7 +94,8 @@ response = {
   });
 });
  
-
+var authenticated;
+var email;
 
 app.post('/login',urlencodedParser, function(req, res) {
 	
@@ -103,25 +103,26 @@ app.post('/login',urlencodedParser, function(req, res) {
 	var pass = req.body.txt_password;
 	const auth = firebase.auth();
 	const promise = auth.signInWithEmailAndPassword(email, pass);
-	promise.catch(e => res.send(e.message));
-		
-	
+	promise.catch(e => res.send(e.false));
+	//console.log(auth.signInWithEmailAndPassword(email, pass));
+	console.log(firebase.auth());
 	firebase.auth().onAuthStateChanged(firebaseUser => {
 		if(firebaseUser){
+			console.log("Logged");
 			authenticated = true;
-			email = req.body.txt_email;
+			res.send(authenticated);
 		}else{
+			console.log("Denied");
 			authenticated = false;
+			res.send(authenticated);
 		}
 	});
 });
-app.get('/login', function(req, res){
-	res.send(authenticated);
-});
+
 var groups = [];
 var id;
 app.post('/list', urlencodedParser, function(req, res) {
-	var email = 'nekitko123@gmail.com';
+	var email = req.body.txt_email;
 	var values;
 	
 	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
