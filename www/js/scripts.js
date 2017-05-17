@@ -9,14 +9,17 @@ $('#btn-submit').click(function(){
         dataType: "json",
 		async: false,
         success: function(data) {
-            if (data == true){
+            if (data === true){
 				alert("Succesfully logined");
 				window.location.href = "groups-body.html";
 				data = false;
 			}else{
 				alert("Permission denied");
 			}
-        }
+        },
+		error: function(){
+			alert("Permission denied");
+		}
     });
 });
 $('#create-group').click(function(){
