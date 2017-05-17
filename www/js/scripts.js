@@ -58,10 +58,36 @@ function groups(){
 					var node = document.createElement("li");
 					var link = document.createElement("a"); 
 					var textnode = document.createTextNode(data[i]);
+					
+					var del = document.createElement("button");
+					var deltext = document.createTextNode("delete");
+					del.appendChild(deltext);
+					del.id = "btn-delete" + i;
+					del.className = "btn-delete"
+					del.value = data[i];
+					
 					link.appendChild(textnode);
 					link.className = "ui-btn ui-btn-icon-right ui-icon-carat-r";
 					node.appendChild(link);
+					node.appendChild(del);
 					document.getElementById("group-list").appendChild(node);
 				}
+				$('.btn-delete').click(function(){
+					alert(this.id);
+					
+					$.ajax({
+						type: "POST",
+						url: 'http://192.168.0.157:8081/groupDelete',
+						data: ({group_name: $('#' + this.id).val()}),
+						dataType: "json",
+						async: false,
+						success: function(data){
+							if(data == true){
+								location.reload();
+							}
+						}
+					});
+				});
 			});
+			
 }
