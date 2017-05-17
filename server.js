@@ -80,16 +80,20 @@ app.post('/login',urlencodedParser, function(req, res) {
 	promise.catch(e => res.send(e.message));
 	
 	firebase.auth().onAuthStateChanged(firebaseUser => {
+		if(!firebaseUser){
+			console.log("Denied");
+			authenticated = false;
+			//res.send(authenticated);
+		}
 		if(firebaseUser){
 			console.log("Logged");
 			authenticated = true;
 			res.send(authenticated);
-		}else{
-			console.log("Denied");
-			//authenticated = false;
-			//res.send(authenticated);
 		}
+		console.log(authenticated);
+		
 	});
+	
 });
 
 var groups = [];
