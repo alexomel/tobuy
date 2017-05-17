@@ -2,8 +2,6 @@
 var authenticated;
 $('#btn-submit').click(function(){
 	
-	
-	//$.post('http://192.168.0.157:8081/login', ({txt_email: $('[name=txt-email]').val(), txt_password: $('[name=txt-password]').val()}), true, 'json');
 	$.ajax({
         type: "POST",
         url: 'http://192.168.0.157:8081/login',
@@ -12,7 +10,7 @@ $('#btn-submit').click(function(){
 		async: false,
         success: function(data) {
             if (data == true){
-				alert(data);
+				alert("Succesfully logined");
 				window.location.href = "groups-body.html";
 				data = false;
 			}else{
@@ -20,23 +18,34 @@ $('#btn-submit').click(function(){
 			}
         }
     });
-	/*
-	$.post('http://192.168.0.157:8081/check', function(data, status){
-		//alert(data);
-		authenticated = data;
-		if (authenticated == true){
-			window.location.href = "groups-body.html";
+});
+$('#create-group').click(function(){
+	var groupName = prompt("Provide group name: ");
+	$.ajax({
+		type: "POST",
+		url: 'http://192.168.0.157:8081/createGroup',
+		data: ({group_name: groupName}),
+        dataType: "json",
+		async: false,
+});
+location.reload();
+});
+
+$('#btn-logout').click(function(){
+	$.ajax({
+		type: "POST",
+		url: 'http://192.168.0.157:8081/logout',
+		data: ({x: ""}),
+        dataType: "json",
+		async: false,
+		success: function(data){
+			if(data == true){
+				
+			}
 		}
-	});*/
-	//$('#login-form')[0].reset();
-	/*
-	$.get("http://192.168.0.157:8081/login", function(data, status){
-        authenticated = data;
-		if (authenticated == true){
-			window.location.href = "groups-body.html";
-		}
-    });
-	*/
+});
+window.location.href = "index.html";
+//location.reload();
 });
 
 //groups

@@ -14,14 +14,17 @@
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-
+	<div data-role="header">
+	<button id="btn-logout" class="ui-btn-right ui-btn-inline ui-mini">Logout</button>
+	</div>
 	<h2>Groups:</h2>
     <ul data-role="listview" id="group-list">
+	  <li><a href="#" id="create-group">Create group</a></li>
       <li><a href="#">List Item</a></li>
       <li><a href="#">List Item</a></li>
       <li><a href="#">List Item</a></li>
     </ul>
 	<script src="js/scripts.js"></script>
-	<script>//groups();</script>
+	<script>groups();</script>
 </body>
 </html>
