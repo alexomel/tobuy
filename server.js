@@ -135,3 +135,11 @@ app.post('/logout', urlencodedParser, function(req, res) {
 	res.send(true);
 
 });
+
+app.post('/groupDelete', urlencodedParser, function(req, res) {
+	var group = req.body.group_name;
+	console.log(group);
+	connection.query("DELETE FROM groups WHERE group_name=" + JSON.stringify(group) + "");
+	res.send(true);
+
+});
