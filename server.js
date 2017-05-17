@@ -5,9 +5,6 @@ var fs = require('fs');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var firebase = require('firebase');
 var mysql = require('mysql');
-
-
-
 /*
 
 												FIREBASE INIT
@@ -59,39 +56,16 @@ connection.connect(function(err){
 });
 
 
-
-
-
-app.get('/query',  function(req, res){
-	connection.query("SELECT * FROM users", function(err, rows, fields){
-		//connection.end();
-		console.log(rows);
-	res.send(JSON.stringify(rows));
-	});
-	
-});
-app.post('/insert', urlencodedParser, function(req, res){
-	var email = req.body.txt_email;
-	var password = req.body.txt_password;
-	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")");
-	res.send("true");
-});
 /*
 
 											REQUESTS FROM UI
 
 */
-app.post('/process_post',urlencodedParser, (req, res) => {
-response = {
-      first_name:req.body.first_name,
-      last_name:req.body.last_name
-   };
-	db.collection('users').save(response, (err, result) => {
-    if (err) return console.log(err)
-
-    console.log('saved to database')
-    //res.redirect('/')
-  });
+app.post('/insert', urlencodedParser, function(req, res){
+	var email = req.body.txt_email;
+	var password = req.body.txt_password;
+	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")");
+	res.send("true");
 });
  
 var authenticated;
@@ -99,13 +73,12 @@ var email;
 
 app.post('/login',urlencodedParser, function(req, res) {
 	
-	var email = req.body.txt_email;
+	email = req.body.txt_email;
 	var pass = req.body.txt_password;
 	const auth = firebase.auth();
 	const promise = auth.signInWithEmailAndPassword(email, pass);
-	promise.catch(e => res.send(e.false));
-	//console.log(auth.signInWithEmailAndPassword(email, pass));
-	console.log(firebase.auth());
+	promise.catch(e => res.send(e.message));
+	
 	firebase.auth().onAuthStateChanged(firebaseUser => {
 		if(firebaseUser){
 			console.log("Logged");
@@ -113,8 +86,8 @@ app.post('/login',urlencodedParser, function(req, res) {
 			res.send(authenticated);
 		}else{
 			console.log("Denied");
-			authenticated = false;
-			res.send(authenticated);
+			//authenticated = false;
+			//res.send(authenticated);
 		}
 	});
 });
@@ -122,25 +95,43 @@ app.post('/login',urlencodedParser, function(req, res) {
 var groups = [];
 var id;
 app.post('/list', urlencodedParser, function(req, res) {
-	var email = req.body.txt_email;
+	
 	var values;
 	
 	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
+		
 		values = JSON.parse(JSON.stringify(rows));
+		
 		id = Number(values[0].id);
-		//console.log(JSON.parse(id));
-		var query = mysql.format('SELECT group_name FROM GROUPS WHERE id_user=?', id);
-		connection.query(query, function(err, rows, fields){
-		//console.log(rows);
+		
+		connection.query("SELECT group_name FROM GROUPS WHERE id_user=" + id +"", function(err, rows, fields){
+			
 			values = JSON.parse(JSON.stringify(rows));
-			console.log("values: " + JSON.stringify(rows));
+			
 			for(var i=0; i < values.length; i++){
+				
 				groups.push(values[i].group_name);
+			
 			}
-			//groups = values[0].group_name;
-			//console.log(groups);
+			
 			res.send(groups);
+			
 			groups = [];
 		});
 	});
+	
+});
+
+app.post('/createGroup', urlencodedParser, function(req, res) {
+
+	var group = req.body.group_name;
+	connection.query("INSERT INTO groups (group_name, id_user) VALUES (" + JSON.stringify(group) + "," + id + ")");
+	res.send(true);
+});
+
+app.post('/logout', urlencodedParser, function(req, res) {
+	
+	firebase.auth().signOut();
+	res.send(true);
+
 });
