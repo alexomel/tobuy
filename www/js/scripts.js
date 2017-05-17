@@ -63,7 +63,7 @@ function groups(){
 					var deltext = document.createTextNode("delete");
 					del.appendChild(deltext);
 					del.id = "btn-delete" + i;
-					del.className = "btn-delete"
+					del.className = "btn-delete ui-btn";
 					del.value = data[i];
 					
 					link.appendChild(textnode);
