@@ -94,6 +94,21 @@ app.post('/login',urlencodedParser, function(req, res) {
 		
 	});
 	
+	var user = firebase.auth().currentUser;
+	console.log(user);
+});
+app.post('/register', urlencodedParser, function(req, res){
+
+	var email = req.body.txt_email;
+	var password = req.body.txt_password;
+	//console.log(email + " " + pass);
+	const auth = firebase.auth();
+	const promise = auth.createUserWithEmailAndPassword(email, password);
+	promise.catch(e => res.send(e.message));
+	
+	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")");
+	//res.send("true");
+	
 });
 
 var groups = [];
@@ -105,7 +120,7 @@ app.post('/list', urlencodedParser, function(req, res) {
 	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
 		
 		values = JSON.parse(JSON.stringify(rows));
-		
+
 		id = Number(values[0].id);
 		
 		connection.query("SELECT group_name FROM GROUPS WHERE id_user=" + id +"", function(err, rows, fields){
@@ -146,4 +161,38 @@ app.post('/groupDelete', urlencodedParser, function(req, res) {
 	connection.query("DELETE FROM groups WHERE group_name=" + JSON.stringify(group) + "");
 	res.send(true);
 
+});
+
+app.post('/resetPassword', urlencodedParser, function(req, res) {
+	var auth = firebase.auth();
+	var emailAddress = req.body.txt_email;
+
+	auth.sendPasswordResetEmail(emailAddress).then(function() {
+  // Email sent.
+	}, function(error) {
+  // An error happened.
+	});
+});
+
+app.post('/addUser', urlencodedParser, function(req, res) {
+	var email = req.body.useremail;
+	var group = req.body.group_n;
+	var id;
+	var values;
+	//console.log(JSON.stringify(email))
+	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
+		
+		values = JSON.parse(JSON.stringify(rows));
+		
+		id = Number(values[0].id);
+		//console.log(id);
+		connection.query("INSERT INTO groups (group_name, id_user) VALUES ('" + group + "'," + id + ")", function(err){
+		if(err){
+		console.log(err);
+		}
+	});
+	});
+	
+	
+	res.send("");
 });
