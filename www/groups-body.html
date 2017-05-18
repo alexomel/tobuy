@@ -13,21 +13,43 @@
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 </head>
+
 <body>
-<div data-role="page">
+    <div data-role="page">
         <div data-role="header" data-theme="c">
+            <a class="ui-btn ui-icon-bars ui-btn-icon-left ui-btn-icon-notext ui-corner-all ui-btn-c" style="border-width: 0px" href="#mypanel"></a>
             <h1>To Buy List</h1>
             <button id="btn-logout" class="ui-btn-right ui-btn-inline ui-mini">Logout</button>
         </div>
         <!-- /header -->
         <div role="main" class="ui-content">
-            <h3>Groups</h3>
-
-	
-    <ul data-role="listview" data-inset="true" data-filter-placeholder="Search group..." data-filter="true" id="group-list">
-	  <li><a href="#" id="create-group">Create group</a></li>
-    </ul>
-	<script src="js/scripts.js"></script>
-	<script>groups();</script>
+            <div class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open" id="mypanel" data-role="panel" data-theme="a" data-display="overlay" data-position="left">
+                <div class="ui-panel-inner">
+                    <ul data-role="listview">
+                        <li><a class="ui-btn ui-icon-home ui-btn-icon-right" href="#">Home</a></li>
+                        <li><a class="ui-btn ui-icon-user ui-btn-icon-right" href="#groups-body.html">Groups</a></li>
+                        <li><a class="ui-btn ui-icon-bullets ui-btn-icon-right" href="#">Lists</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /panel -->
+        <h3>Groups</h3>
+        <ul data-role="listview" data-inset="true" data-filter-placeholder="Search group..." data-filter="true" id="group-list">
+            <div data-role="collapsible" data-theme="b" data-content-theme="b">
+                <h2>Group Name</h2>
+                <ul data-role="listview" data-inset="true">
+                    <li class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-right">User1</li>
+                    <li class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-right">User2...</li>
+                    <li><a class="ui-btn ui-btn-c ui-corner-bottom ui-icon-plus ui-btn-icon-right" href="#">Add</a></li>
+                </ul>
+            </div>
+        </ul>
+        <a class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left ui-corner-all ui-shadow" href="#" id="create-group">Create group</a>
+        <script src="js/scripts.js"></script>
+        <script>
+        groups();
+        </script>
 </body>
+
 </html>

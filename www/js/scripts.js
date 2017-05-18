@@ -85,8 +85,13 @@ function groups(){
 				//alert(data.length);
 				for(var i=0; i<data.length; i++){
 					var node = document.createElement("li");
-					var link = document.createElement("a"); 
+					var groupHead = document.createElement("h2");
+					var link = document.createElement("ul"); 
+					var box = document.createElement("div");
 					var textnode = document.createTextNode(data[i]);
+					//link.className = "";
+					//link.setAttribute('data-role', 'listview');
+					//link.setAttribute('data-inset', 'true');
 					
 					var del = document.createElement("button");
 					var deltext = document.createTextNode("delete");
@@ -102,12 +107,21 @@ function groups(){
 					addUser.className = "btn-add-user ui-btn ui-btn-inline";
 					addUser.value = data[i];
 					
-					link.appendChild(textnode);
-					link.className = "ui-btn ui-btn-icon-right ui-icon-bars";
-					node.appendChild(link);
+					groupHead.appendChild(textnode);
+					box.appendChild(groupHead);
+					box.appendChild(link);
 					node.appendChild(del);
 					node.appendChild(addUser);
-					document.getElementById("group-list").appendChild(node);
+					node.setAttribute('data-icon', 'false');
+					link.appendChild(node);
+
+
+					//box.className = "ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content";
+					box.setAttribute('data-role', 'collapsible');
+					box.setAttribute('data-theme','c');
+					box.setAttribute('data-content-theme','a');
+					document.getElementById("group-list").appendChild(box);
+
 				}
 				$('.btn-delete').click(function(){
 					//alert(this.id);
