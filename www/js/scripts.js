@@ -22,6 +22,32 @@ $('#btn-submit').click(function(){
 		}
     });
 });
+$('#btn-submit1').click(function(){
+	
+	$.ajax({
+        type: "POST",
+        url: 'http://192.168.0.157:8081/register',
+        data: ({txt_email: $('#txt-email').val(), txt_password: $('#txt-password').val()}),
+        dataType: "json",
+		async: true,
+		success: function(data){
+			
+		}
+		/*,
+        success: function(data) {
+            if (data === true){
+				alert("Succesfully logined");
+				window.location.href = "groups-body.html";
+				data = false;
+			}else{
+				alert("Permission denied");
+			}
+        },
+		error: function(){
+			alert("Permission denied");
+		} */
+    });
+});
 $('#create-group').click(function(){
 	var groupName = prompt("Provide group name: ");
 	$.ajax({
@@ -47,7 +73,7 @@ $('#btn-logout').click(function(){
 			}
 		}
 });
-window.location.href = "index.html";
+window.location.href = "sign-in.html";
 //location.reload();
 });
 
@@ -66,22 +92,45 @@ function groups(){
 					var deltext = document.createTextNode("delete");
 					del.appendChild(deltext);
 					del.id = "btn-delete" + i;
-					del.className = "btn-delete ui-btn";
+					del.className = "btn-delete ui-btn-inline ui-mini";
 					del.value = data[i];
+					
+					var addUser = document.createElement("button");
+					var addUserText = document.createTextNode("add user");
+					addUser.appendChild(addUserText);
+					addUser.id = "add-user" + i;
+					addUser.className = "btn-add-user ui-btn-inline ui-mini";
+					addUser.value = data[i];
 					
 					link.appendChild(textnode);
 					link.className = "ui-btn ui-btn-icon-right ui-icon-carat-r";
 					node.appendChild(link);
 					node.appendChild(del);
+					node.appendChild(addUser);
 					document.getElementById("group-list").appendChild(node);
 				}
 				$('.btn-delete').click(function(){
-					alert(this.id);
+					//alert(this.id);
 					
 					$.ajax({
 						type: "POST",
 						url: 'http://192.168.0.157:8081/groupDelete',
 						data: ({group_name: $('#' + this.id).val()}),
+						dataType: "json",
+						async: false,
+						success: function(data){
+							if(data == true){
+								location.reload();
+							}
+						}
+					});
+				});
+				$('.btn-add-user').click(function(){
+					var email = prompt();
+					$.ajax({
+						type: "POST",
+						url: 'http://192.168.0.157:8081/addUser',
+						data: ({group_n: $('#' + this.id).val(), useremail: email}),
 						dataType: "json",
 						async: false,
 						success: function(data){
