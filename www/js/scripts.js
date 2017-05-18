@@ -92,18 +92,18 @@ function groups(){
 					var deltext = document.createTextNode("delete");
 					del.appendChild(deltext);
 					del.id = "btn-delete" + i;
-					del.className = "btn-delete ui-btn-inline ui-mini";
+					del.className = "ui-btn btn-delete ui-btn-inline ui-icon-delete ui-btn-icon-notext ui-corner-all";
 					del.value = data[i];
 					
 					var addUser = document.createElement("button");
-					var addUserText = document.createTextNode("add user");
+					var addUserText = document.createTextNode("Add user");
 					addUser.appendChild(addUserText);
 					addUser.id = "add-user" + i;
-					addUser.className = "btn-add-user ui-btn-inline ui-mini";
+					addUser.className = "btn-add-user ui-btn ui-btn-inline";
 					addUser.value = data[i];
 					
 					link.appendChild(textnode);
-					link.className = "ui-btn ui-btn-icon-right ui-icon-carat-r";
+					link.className = "ui-btn ui-btn-icon-right ui-icon-bars";
 					node.appendChild(link);
 					node.appendChild(del);
 					node.appendChild(addUser);

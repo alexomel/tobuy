@@ -14,12 +14,17 @@
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-	<div data-role="header">
-	<button id="btn-logout" class="ui-btn-right ui-btn-inline ui-mini">Logout</button>
-	</div>
-	<h2>Groups:</h2>
+<div data-role="page">
+        <div data-role="header" data-theme="c">
+            <h1>To Buy List</h1>
+            <button id="btn-logout" class="ui-btn-right ui-btn-inline ui-mini">Logout</button>
+        </div>
+        <!-- /header -->
+        <div role="main" class="ui-content">
+            <h3>Groups</h3>
+
 	
-    <ul data-role="listview" id="group-list">
+    <ul data-role="listview" data-inset="true" data-filter-placeholder="Search group..." data-filter="true" id="group-list">
 	  <li><a href="#" id="create-group">Create group</a></li>
     </ul>
 	<script src="js/scripts.js"></script>
