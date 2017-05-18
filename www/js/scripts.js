@@ -83,7 +83,7 @@ function groups(){
 			$.post('http://192.168.0.157:8081/list', function(data, status){
 			
 				//alert(data.length);
-				for(var i=0; i<data.length; i++){
+				for(var i=0; i<data.length - 1; i++){
 					var node = document.createElement("li");
 					var groupHead = document.createElement("h2");
 					var link = document.createElement("ul"); 
