@@ -106,7 +106,9 @@ app.post('/register', urlencodedParser, function(req, res){
 	const promise = auth.createUserWithEmailAndPassword(email, password);
 	promise.catch(e => res.send(e.message));
 	
-	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")");
+	connection.query("INSERT INTO users (email, password) VALUES (" + JSON.stringify(email) + "," + JSON.stringify(password) + ")", function(err){
+		console.log(err);
+	});
 	//res.send("true");
 	
 });
