@@ -79,11 +79,46 @@ window.location.href = "sign-in.html";
 
 //groups
 function groups(){
-	
-			$.post('http://192.168.0.157:8081/list', function(data, status){
 			
-				//alert(data.length);
+			$.post('http://192.168.0.157:8081/list', function(data, status){
+				
 				for(var i=0; i<data.length - 1; i++){
+					var nextId = i;
+					nextId++;
+					var content = "<div data-role='collapsible' data-theme='b' data-content-theme='b' id='group" + nextId + "'>" + 
+					"<h2>" + data[i] + "</h2>"+
+					"<ul data-role='listview' data-inset='true'>" +
+					"<li><a class='ui-btn ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right' href='#'>Delete</a></li>"+
+                    "<li><a class='ui-btn ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-add-user' id="+ data[i] +" href='#'>Add</a></li>" +
+                "</ul>" +
+				"<a class='ui-btn ui-btn-inline ui-icon-minus ui-btn-icon-left ui-corner-all ui-shadow btn-delete' id="+ data[i] +" href='#'>Delete group</a>"+
+            "</div>"
+					$("#set").append( content ).collapsibleset('refresh');
+					};
+/*
+                
+                    
+                    <div id="popupDialog" style="max-width:400px;" data-role="popup" data-theme="a" data-overlay-theme="a" data-dismissible="false">
+                        <div data-role="header" data-theme="c">
+                            <h1>Delete User?</h1>
+                        </div>
+                        <div class="ui-content" role="main">
+                            <h3 class="ui-title">Are you sure you want to delete this user?</h3>
+                            <p>This action cannot be undone.</p>
+                            <a class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a" href="#" data-rel="back">Cancel</a>
+                            <a class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" href="#" data-rel="back" data-transition="flow">Delete</a>
+                        </div>
+                    </div><br>
+                    <li><a class="ui-btn ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right" href="#">Add</a></li>
+                </ul>
+            </div>
+					
+					
+				*/	
+				
+					
+					
+					/*
 					var node = document.createElement("li");
 					var groupHead = document.createElement("h2");
 					var link = document.createElement("ul"); 
@@ -121,15 +156,15 @@ function groups(){
 					box.setAttribute('data-theme','c');
 					box.setAttribute('data-content-theme','a');
 					document.getElementById("group-list").appendChild(box);
-
-				}
+					*/
+				
 				$('.btn-delete').click(function(){
-					//alert(this.id);
+					alert((this.id));
 					
 					$.ajax({
 						type: "POST",
 						url: 'http://192.168.0.157:8081/groupDelete',
-						data: ({group_name: $('#' + this.id).val()}),
+						data: ({group_name: this.id}),
 						dataType: "json",
 						async: false,
 						success: function(data){
@@ -144,7 +179,7 @@ function groups(){
 					$.ajax({
 						type: "POST",
 						url: 'http://192.168.0.157:8081/addUser',
-						data: ({group_n: $('#' + this.id).val(), useremail: email}),
+						data: ({group_n: this.id, useremail: email}),
 						dataType: "json",
 						async: false,
 						success: function(data){
