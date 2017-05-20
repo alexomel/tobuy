@@ -201,7 +201,8 @@ function groups() {
 						dataType: "json",
 						async: true,
 						success: function(data){
-							if(data != ""){
+							
+							if(data != "undefined"){
 									var dat = data.length;
 									while(dat > 0){
 										//var dd = JSON.stringify(data).split(":");
@@ -213,6 +214,8 @@ function groups() {
 									count2++;
 									datCount2 = 0;
 								
+							}else{
+									document.getElementById('lists'+count2).innerHTML = "" + "<br>";
 							}
 							
 							/*if(data != '')
