@@ -15,14 +15,13 @@
 </head>
 
 <body>
-    <div data-role="page">
-        <div data-role="header" data-theme="c">
+    <div data-role="page" data-theme="a">
+        <div data-role="header" data-theme="a">
             <h1>To Buy List</h1>
         </div>
         <!-- /header -->
         <div role="main" class="ui-content">
             <h3>Sign Up</h3>
-            
             <label for="txt-email">Email Address</label>
             <input type="text" name="txt-email" id="txt-email" value="">
             <label for="txt-password">Password</label>
@@ -30,21 +29,21 @@
             <label for="txt-password-confirm">Confirm Password</label>
             <input type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
             <a href="#dlg-sign-up-sent" data-rel="popup" data-transition="pop" data-position-to="window" id="btn-submit1" class="ui-btn ui-btn-c ui-corner-all mc-top-margin-1-5">Submit</a>
+            <a href="index.html" data-position-to="window" class="ui-btn ui-corner-all mc-top-margin-1-5">Back to login</a>
             <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="c">
-                    <h1>Almost done...</h1>
+                    <h1>Registered</h1>
                 </div>
                 <div role="main" class="ui-content">
-                    <h3>Confirm Your Email Address</h3>
-                    <p>We sent you an email with instructions on how to confirm your email address. Please check your inbox and follow the instructions in the email.</p>
-                    <div class="mc-text-center"><a href="sign-up.html" class="ui-btn ui-corner-all ui-shadow ui-btn-c mc-top-margin-1-5">OK</a></div>
+                    <h3>You account has been succesfully created</h3>
+                    <div class="mc-text-center"><a href="index.html.html" class="ui-btn ui-corner-all ui-shadow ui-btn-c mc-top-margin-1-5">OK</a></div>
                 </div>
             </div>
         </div>
         <!-- /content -->
     </div>
     <!-- /page -->
-	<script src="js/scripts.js"></script>
+    <script src="js/scripts.js"></script>
 </body>
 
 </html>
