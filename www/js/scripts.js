@@ -102,7 +102,7 @@ function lists(){
 				"<div class='ui-grid-a'>" + "<div class='ui-block-a'>" +
                 "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-item-add' id=" + data[i] + " href='#'>Add item</a>" + "</div>" +
                  "<div class='ui-block-b'>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-item-del' id=" + data[i] + " href='#'>Delete item</a>" + "</div>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-item-del' id=" + data[i] + " href='#'>Delete item</a>" + "</div>" +
 
                //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right btn-item-del' id="+data[i]+" href='#'>Delete</a>" +
                 //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-item-add' id=" + data[i] + " href='#'>Add</a>" +
@@ -161,11 +161,11 @@ function groups() {
                 "<div class='ui-grid-a'>" + "<div class='ui-block-a'>" +
                 "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-add-user' id=" + data[i] + " href='#'>Add User</a>" + "</div>" +
                 "<div class='ui-block-b'>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-usr-del' id=" + data[i] + " href='#'>Delete user</a>" + "</div>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-usr-del' id=" + data[i] + " href='#'>Delete user</a>" + "</div>" +
                 "<br />" + "<div class='ui-block-a'>" +
                 "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-add-list' id='" + data[i] + "' href='#'>Create list</a>" + "</div>" +
                 "<div class='ui-block-b'>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" + "</div>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" + "</div>" +
                 "</div>" + "</div>"
 			var count = 0;
 			var datCount = 0;
