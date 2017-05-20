@@ -118,37 +118,56 @@ var id;
 app.post('/list', urlencodedParser, function(req, res) {
 	
 	var values;
+	if(!email){
+	email = "nekitko123@gmail.com";
+	}
 	
 	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
+	if(err){
+		console.log(err);
+		}
 		
 		values = JSON.parse(JSON.stringify(rows));
-
 		id = Number(values[0].id);
-		
-		connection.query("SELECT group_name FROM GROUPS WHERE id_user=" + id +"", function(err, rows, fields){
-			
+		connection.query("SELECT DISTINCT group_name FROM GROUPS WHERE id_user=" + id +"", function(err, rows, fields){
+			if(err){
+		console.log(err);
+		}
 			values = JSON.parse(JSON.stringify(rows));
-			
+			console.log(err)
 			for(var i=0; i < values.length; i++){
-				
+				console.log(err)
 				groups.push(values[i].group_name);
 			
 			}
-			
+			groups.push(id);
+			console.log(groups);
 			res.send(groups);
-			
 			groups = [];
+			//console.log(err)
 		});
 	});
 	
 });
 
 app.post('/createGroup', urlencodedParser, function(req, res) {
-
 	var group = req.body.group_name;
-	connection.query("INSERT INTO groups (group_name, id_user) VALUES (" + JSON.stringify(group) + "," + id + ")");
-	res.send(true);
+	if(group != ""){
+	connection.query("SELECT group_name, id_user FROM groups WHERE group_name='" + group +"'", function(err, rows, fields){
+			if(rows.length < 1){
+				connection.query("INSERT INTO groups (group_name, id_user) VALUES (" + JSON.stringify(group) + "," + id + ")");
+				res.send(true);
+			}else{
+				console.log(rows.length);
+			}
+			
+	
+	});
+	}else{
+	res.send("");
+	}
 });
+
 
 app.post('/logout', urlencodedParser, function(req, res) {
 	
@@ -159,7 +178,6 @@ app.post('/logout', urlencodedParser, function(req, res) {
 
 app.post('/groupDelete', urlencodedParser, function(req, res) {
 	var group = req.body.group_name;
-	console.log(group);
 	connection.query("DELETE FROM groups WHERE group_name=" + JSON.stringify(group) + "");
 	res.send(true);
 
@@ -182,19 +200,66 @@ app.post('/addUser', urlencodedParser, function(req, res) {
 	var id;
 	var values;
 	//console.log(JSON.stringify(email))
+	if(email != ""){
 	connection.query("SELECT id FROM users WHERE email='" + email + "'", function(err, rows, fields){
 		
 		values = JSON.parse(JSON.stringify(rows));
 		
 		id = Number(values[0].id);
-		//console.log(id);
-		connection.query("INSERT INTO groups (group_name, id_user) VALUES ('" + group + "'," + id + ")", function(err){
-		if(err){
-		console.log(err);
-		}
+		console.log(id);
+		console.log(group);
+		connection.query("SELECT group_name, id_user FROM groups WHERE group_name='" + group +"' AND id_user=" + id + "", function(err, rows, fields){
+		console.log(group);
+				if(rows.length < 1){
+					connection.query("INSERT INTO groups (group_name, id_user) VALUES ('" + group + "'," + id + ")");
+					//res.send(true);
+				}else{
+					console.log(rows.length);
+				}
+			
+	
+		});
+		res.send(true);
+	});
+	}
+	
+});
+
+app.post('/listUsers', urlencodedParser, function(req, res) {
+	
+	var group = req.body.group_name;
+	connection.query("SELECT email FROM users WHERE id IN (SELECT id_user FROM groups WHERE group_name='"+group+"')", function(err, rows, fields){
+			values = JSON.parse(JSON.stringify(rows));
+			console.log(values);
+			res.send(values);
+			
+	});
+
+});
+
+app.post('/delUser', urlencodedParser, function(req, res) {
+	
+	var email = req.body.user_del;
+	var groupId = req.body.group_id;
+	console.log(email + " " + groupId);
+	connection.query("DELETE FROM groups WHERE group_name='"+groupId+"' AND id_user IN (SELECT id FROM users WHERE email='"+email+"')", function(err, rows, fields){
+		res.send(true);
+	});
+
+});
+
+app.post('/createList', urlencodedParser, function(req, res) {
+	var listname = req.body.list_name;
+	var groupname = req.body.group_name;
+	console.log(id);
+	connection.query("SELECT id FROM groups WHERE group_name='"+groupname+"' AND id_user="+id+"", function(err, rows, fields){
+		values = JSON.parse(JSON.stringify(rows));
+		//console.log(values[0].id);
+		connection.query("INSERT INTO lists (list_name, id_group) VALUES ('"+listname+"', "+values[0].id+")", function(err, rows, fields){
 	});
 	});
 	
 	
-	res.send("");
+	res.send(true);
+
 });
