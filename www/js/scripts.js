@@ -74,7 +74,7 @@ $('#btn-logout').click(function() {
             }
         }
     });
-    window.location.href = "sign-in.html";
+    window.location.href = "index.html";
     //location.reload();
 });
 
