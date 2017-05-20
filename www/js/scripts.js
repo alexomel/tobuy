@@ -32,8 +32,8 @@ $('#btn-submit1').click(function() {
         dataType: "json",
         async: true,
         success: function(data) {
-
-            }
+			
+        }
             /*,
         success: function(data) {
             if (data === true){
