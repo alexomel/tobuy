@@ -143,7 +143,7 @@ function groups() {
 
             var nextId = i;
             nextId++;
-            var content = "<div data-role='collapsible' data-theme='b' data-content-theme='b' id='group" + nextId + "'>" +
+            var content = "<div data-role='collapsible' data-theme='c' data-content-theme='c' id='group" + nextId + "'>" +
                 "<h2>" + data[i] + "</h2>" +
                 "<ul data-role='listview' data-inset='true' id='appendib"+i+"'>" +
                 "<h3>users:</h3>" +
@@ -153,13 +153,15 @@ function groups() {
                 "<h3>lists:</h3>" +
 				"<span id='lists"+i+"'></span>"+
                 "</ul>" +
-                "<ul data-role='listview' data-inset='true'>" + "</ul>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right btn-usr-del' id="+data[i]+" href='#'>Delete</a>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-add-user' id=" + data[i] + " href='#'>Add</a>" +
-				
-				"<a class='ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all ui-shadow btn-add-list' id='" + data[i] + "' href='#'>Create List</a>" +
-                "<a class='ui-btn ui-icon-minus ui-btn-icon-left ui-corner-all ui-shadow btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" +
-                "</div>"
+                "<div class='ui-grid-a'>" + "<div class='ui-block-a'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-add-user' id=" + data[i] + " href='#'>Add User</a>" + "</div>" +
+                "<div class='ui-block-b'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-usr-del' id=" + data[i] + " href='#'>Delete user</a>" + "</div>" +
+                "<br />" + "<div class='ui-block-a'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-add-list' id='" + data[i] + "' href='#'>Create list</a>" + "</div>" +
+                "<div class='ui-block-b'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" + "</div>" +
+                "</div>" + "</div>"
 			var count = 0;
 			var datCount = 0;
             $.ajax({
