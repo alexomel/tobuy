@@ -92,15 +92,20 @@ function lists(){
 					var nextId = i;
 					nextId++;
 					//alert(data[i].list_name);
-					var content = "<div data-role='collapsible' data-theme='b' data-content-theme='b' id='group" + nextId + "'>" +
+					var content = "<div data-role='collapsible' data-theme='a' data-content-theme='a' id='group" + nextId + "'>" +
                 "<h2>" + data[i].list_name + "</h2>" +
                 "<ul data-role='listview' data-inset='true' id='appendib"+i+"'>" +
 				"<span id='lists"+i+"'></span>"+
                 "</ul>" +
                 //"<ul data-role='listview' data-inset='true'>" + "</ul>" +
 				"<input type='text' name='txt-item' id='txt-item' value=''>"+"<br>"+
-                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right btn-item-del' id="+data[i]+" href='#'>Delete</a>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-item-add' id=" + data[i] + " href='#'>Add</a>" +
+				"<div class='ui-grid-a'>" + "<div class='ui-block-a'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-item-add' id=" + data[i] + " href='#'>Add item</a>" + "</div>" +
+                 "<div class='ui-block-b'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-item-del' id=" + data[i] + " href='#'>Delete item</a>" + "</div>" +
+
+               //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right btn-item-del' id="+data[i]+" href='#'>Delete</a>" +
+                //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-item-add' id=" + data[i] + " href='#'>Add</a>" +
 				//"<a class='ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all ui-shadow btn-add-list' id='" + data[i] + "' href='#'>Create List</a>" +
                // "<a class='ui-btn ui-icon-minus ui-btn-icon-left ui-corner-all ui-shadow btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" +
                 "</div>"
@@ -143,7 +148,7 @@ function groups() {
 
             var nextId = i;
             nextId++;
-            var content = "<div data-role='collapsible' data-theme='c' data-content-theme='c' id='group" + nextId + "'>" +
+            var content = "<div data-role='collapsible' data-theme='a' data-content-theme='a' id='group" + nextId + "'>" +
                 "<h2>" + data[i] + "</h2>" +
                 "<ul data-role='listview' data-inset='true' id='appendib"+i+"'>" +
                 "<h3>users:</h3>" +
