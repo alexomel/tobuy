@@ -247,7 +247,7 @@ app.post('/delUser', urlencodedParser, function(req, res) {
 	});
 
 });
-
+/*
 app.post('/createList', urlencodedParser, function(req, res) {
 	var listname = req.body.list_name;
 	var groupname = req.body.group_name;
@@ -262,4 +262,43 @@ app.post('/createList', urlencodedParser, function(req, res) {
 	
 	res.send(true);
 
+});
+*/
+app.post('/createList', urlencodedParser, function(req, res) {
+	var listname = req.body.list_name;
+	//console.log(id);
+	//connection.query("SELECT id FROM groups WHERE group_name='"+groupname+"' AND id_user="+id+"", function(err, rows, fields){
+		//values = JSON.parse(JSON.stringify(rows));
+		//console.log(values[0].id);
+		connection.query("INSERT INTO lists (list_name, id_user) VALUES ('"+listname+"', "+id+")", function(err, rows, fields){
+	});
+	//});
+	res.send(true);
+});
+app.post('/listLists', urlencodedParser, function(req, res) {
+	var id = req.body.userId;
+	var values;
+	connection.query("SELECT list_name FROM lists WHERE id_user="+id+"", function(err, rows, fields){
+		values = JSON.parse(JSON.stringify(rows));
+		console.log(values);
+		res.send(values);
+	});
+	
+});
+app.post('/listListsGroups', urlencodedParser, function(req, res) {
+	var group = req.body.group_name;
+	//console.log("ID GRUPPY: " + group[0]);
+	connection.query("SELECT id FROM groups WHERE group_name='"+group+"' AND id_user="+id+"", function(err, rows,fields){
+	
+		values = JSON.parse(JSON.stringify(rows));
+		//console.log(values[0].id);
+		//res.send(values);
+	
+	connection.query("SELECT list_name FROM lists WHERE id_group="+values[0].id+"", function(err, rows, fields){
+		values = JSON.parse(JSON.stringify(rows));
+		console.log(values);
+	res.send(values);
+	 });
+	});
+	
 });
