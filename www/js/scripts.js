@@ -185,6 +185,7 @@ function groups() {
 						}
 			});
 			var count2 = 0;
+			var datCount2 = 0;
 			//var datCount = 0;
 			$.ajax({
 						type: "POST",
@@ -193,7 +194,21 @@ function groups() {
 						dataType: "json",
 						async: true,
 						success: function(data){
-							if(data != '')
+							if(data != ""){
+									var dat = data.length;
+									while(dat > 0){
+										//var dd = JSON.stringify(data).split(":");
+										//alert(datCount);
+										document.getElementById('lists'+count2).innerHTML += data[dat-1].list_name + "<br>";
+										dat--;
+										datCount++;
+									}
+									count2++;
+									datCount2 = 0;
+								
+							}
+							
+							/*if(data != '')
 							var value = JSON.stringify(data[0].list_name)
 							else
 							var value = "";
@@ -211,7 +226,7 @@ function groups() {
 									//datCount = 0;
 								
 							//}
-							
+							*/
 							}
 			});
             $("#set").append(content).collapsibleset('refresh');
@@ -268,6 +283,7 @@ function groups() {
         });
         $('.btn-add-user').click(function() {
             var email = prompt();
+			if(email != ""){
             $.ajax({
                 type: "POST",
                 url: 'http://192.168.0.157:8081/addUser',
@@ -279,7 +295,7 @@ function groups() {
                         location.reload();
                     }
                 }
-            });
+            });}
         });
     });
 
