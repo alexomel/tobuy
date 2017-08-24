@@ -30,9 +30,9 @@ $('#btn-submit1').click(function() {
         url: 'http://192.168.0.157:8081/register',
         data: ({ txt_email: $('#txt-email').val(), txt_password: $('#txt-password').val() }),
         dataType: "json",
-        async: true,
+        async: false,
         success: function(data) {
-			
+			alert("created");
         }
             /*,
         success: function(data) {
@@ -86,6 +86,9 @@ function lists(){
 			var last = data[data.length - 1];
 			id = last;
 			//alert(id);
+			
+			
+			
 			$.post('http://192.168.0.157:8081/listLists', {userId:id} ,function(data, status) {
 				
 				for (var i = 0; i < data.length; i++) {
@@ -98,19 +101,113 @@ function lists(){
 				"<span id='lists"+i+"'></span>"+
                 "</ul>" +
                 //"<ul data-role='listview' data-inset='true'>" + "</ul>" +
-				"<input type='text' name='txt-item' id='txt-item' value=''>"+"<br>"+
+				"<div type='text' name='txt-item' id='txt-item"+i+"' value=''></div>"+"<br>"+
 				"<div class='ui-grid-a'>" + "<div class='ui-block-a'>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-item-add' id=" + data[i] + " href='#'>Add item</a>" + "</div>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-left ui-mini btn-item-add' id=" + data[i].list_name + " href='#'>Add item</a>" + "</div>" +
                  "<div class='ui-block-b'>" +
-                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-item-del' id=" + data[i] + " href='#'>Delete item</a>" + "</div>" +
-
-               //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right btn-item-del' id="+data[i]+" href='#'>Delete</a>" +
-                //"<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-plus ui-btn-icon-right btn-item-add' id=" + data[i] + " href='#'>Add</a>" +
-				//"<a class='ui-btn ui-icon-plus ui-btn-icon-left ui-corner-all ui-shadow btn-add-list' id='" + data[i] + "' href='#'>Create List</a>" +
-               // "<a class='ui-btn ui-icon-minus ui-btn-icon-left ui-corner-all ui-shadow btn-delete' id='" + data[i] + "' href='#'>Delete group</a>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-item-del' id=" + data[i].list_name + " href='#'>Delete item</a>" + "</div>" +
+				"<div class='ui-block-b'>" +
+                "<a class='ui-btn ui-btn-inline ui-btn-c ui-corner-all ui-icon-delete ui-btn-icon-right ui-mini btn-delete-list' id='" + data[i].list_name + "' href='#'>Delete list</a>" + "</div>"+
+				"<a class='ui-btn ui-btn-inline ui-btn-a ui-corner-all btn-add-togroup' id='" + data[i].list_name + "' href='#'>Add to group</a>"+
                 "</div>"
+				var count3 = 0;
+				var datCount3 = 0;
+				//var lis = data[i].list_name;
+				$.ajax({
+						type: "POST",
+						url: 'http://192.168.0.157:8081/listItems',
+						data: ({list_name: data[i].list_name}),
+						dataType: "json",
+						async: true,
+						success: function(data){
+							//location.reload();
+							if(data != "undefined"){
+									var dat = data.length;
+									while(dat > 0){
+										//var dd = JSON.stringify(data).split(":");
+										//alert(datCount);
+										//alert(data[dat-1].item);
+										document.getElementById('txt-item'+count3).innerHTML += data[dat-1].item+ "<br>";
+										dat--;
+										datCount3++;
+									}
+									count3++;
+									datCount3 = 0;
+								
+							}else{
+									document.getElementById('txt-item'+count3).innerHTML = "" + "<br>";
+							}
+						}
+			});
 				$("#setList").append(content).collapsibleset('refresh');
+				
 				}
+				
+				$('.btn-item-add').click(function(){
+					var item = prompt();
+					$.ajax({
+					
+						type: "POST",
+						url: 'http://192.168.0.157:8081/itemAdd',
+						data: ({list_name: this.id, item_name: item}),
+						dataType: "json",
+						async: true,
+						success: function(data){
+							location.reload();
+						}
+					
+					})
+				
+				});
+				$('.btn-add-togroup').click(function(){
+					var group = prompt();
+					$.ajax({
+					
+						type: "POST",
+						url: 'http://192.168.0.157:8081/addToGroup',
+						data: ({list_name: this.id, group_name: group}),
+						dataType: "json",
+						async: true,
+						success: function(data){
+							//location.reload();
+						}
+					
+					})
+				
+				});
+				$('.btn-item-del').click(function(){
+					var item = prompt();
+					$.ajax({
+					
+						type: "POST",
+						url: 'http://192.168.0.157:8081/itemDel',
+						data: ({list_name: this.id, item_name: item}),
+						dataType: "json",
+						async: true,
+						success: function(data){
+							location.reload();
+						}
+					
+					})
+				
+				})
+				
+				$('.btn-delete-list').click(function(){
+					$.ajax({
+					
+						type: "POST",
+						url: 'http://192.168.0.157:8081/deleteList',
+						data: ({list_name: this.id}),
+						dataType: "json",
+						async: true,
+						success: function(data){
+							location.reload();
+						}
+					
+					})
+				
+				})
+				
 			});
 			
 		
